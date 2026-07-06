@@ -103,26 +103,3 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 
 
-
-'''
-
-#fastapi part
-
-from fastapi import FastAPI
-
-app = FastAPI()
-
-tasks = []
-
-@app.get("/tasks")
-
-def get_tasks():
-    return tasks
-
-@app.post("/tasks")
-
-def create_task(task: str):
-    tasks.append(task)
-    return {"message": "Task added"}
-
-'''
