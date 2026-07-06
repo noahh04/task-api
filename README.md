@@ -9,6 +9,7 @@ Small backend learning project built with FastAPI
 - SQLModel
 - SQLite
 - Git
+- Docker
 
 ## Features
 
