@@ -1,50 +1,11 @@
-from typing import Annotated
+from fastapi import FastAPI, HTTPException, Query
+from sqlmodel import select
 
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-
-
-class HeroBase(SQLModel):
-    name: str = Field(index=True)
-    age: int | None = Field(default=None, index=True)
+from database import create_db_and_tables, SessionDep
+from models import Hero
+from schemas import HeroCreate, HeroPublic, HeroUpdate
 
 
-class Hero(HeroBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    secret_name: str
-
-
-class HeroPublic(HeroBase):
-    id: int
-
-
-class HeroCreate(HeroBase):
-    secret_name: str
-
-
-class HeroUpdate(HeroBase):
-    name: str | None = None
-    age: int | None = None
-    secret_name: str | None = None
-
-
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-
-connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args)
-
-
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
-
-
-def get_session():
-    with Session(engine) as session:
-        yield session
-
-
-SessionDep = Annotated[Session, Depends(get_session)]
 app = FastAPI()
 
 
@@ -63,7 +24,7 @@ def create_hero(hero: HeroCreate, session: SessionDep):
 
 
 @app.get("/heroes/", response_model=list[HeroPublic])
-def read_heroes(
+def get_all_heroes (
     session: SessionDep,
     offset: int = 0,
     limit: Annotated[int, Query(le=100)] = 100,
@@ -72,8 +33,28 @@ def read_heroes(
     return heroes
 
 
+@app.get("/heroes/search", response_model=list[HeroPublic])
+def search_for_heroe (
+    session: SessionDep,
+    name: str | None = None,
+    min_age: int | None = None
+):
+    query = select(Hero)
+
+    if name:
+        query = query.where(Hero.name.contains(name))
+
+    if min_age:
+        query = query.where(Hero.age >= min_age)
+    
+    heroes = session.exec(query).all()
+
+    return heroes
+
+
+
 @app.get("/heroes/{hero_id}", response_model=HeroPublic)
-def read_hero(hero_id: int, session: SessionDep):
+def get_heroe_by_id (hero_id: int, session: SessionDep):
     hero = session.get(Hero, hero_id)
     if not hero:
         raise HTTPException(status_code=404, detail="Hero not found")
