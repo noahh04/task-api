@@ -1,6 +1,6 @@
 # Task API 
 
-Small backend learning project built with FastAPI
+Small REST API built with FastAPI as a backend learning project.
 
 ## Technologies 
 
@@ -17,6 +17,7 @@ Small backend learning project built with FastAPI
 - Read heroes
 - Update heroes
 - Delete heroes
+- Search for heroes by specific properties
 
 ## Run
 
@@ -24,3 +25,11 @@ Small backend learning project built with FastAPI
 pip install -r requirements.txt
 python -m uvicorn main:app --reload
 ```
+
+Open your browser:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+to test the API using the Swagger UI.
