@@ -13,11 +13,12 @@ Small REST API built with FastAPI as a backend learning project.
 
 ## Features
 
-- Create heroes
-- Read heroes
-- Update heroes
-- Delete heroes
-- Search for heroes by specific properties
+- Create Tasks
+- Read Tasks
+- Update Tasks
+- Delete Tasks
+- Search for Tasks by specific properties
+- automatic update of tasks' priority when priority changed 
 
 ## Run
 
