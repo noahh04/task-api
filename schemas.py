@@ -1,17 +1,21 @@
 from sqlmodel import SQLModel, Field
-from models import HeroBase
+from models import TaskBase
+from datetime import date
 
 
 
-class HeroPublic(HeroBase):
+class TaskPublic(TaskBase):
     id: int
+    completed: bool
 
 
-class HeroCreate(HeroBase):
-    secret_name: str = Field(min_length=2)
+class TaskCreate(TaskBase):
+    pass
 
 
-class HeroUpdate(SQLModel):
-    name: str | None = Field(default = None, min_length=2)
-    age: int | None = Field(default = None, ge=0, le=150)
-    secret_name: str | None = Field(default = None, min_length=2)
+class TaskUpdate(SQLModel):
+    title: str | None = None
+    priority: int | None = Field(default=None, ge=1)
+    description: str | None = None
+    due_date: date | None = None
+    completed: bool | None = None

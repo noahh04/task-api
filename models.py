@@ -1,9 +1,12 @@
 from sqlmodel import SQLModel, Field
+from datetime import date
 
-class HeroBase(SQLModel):
-    name: str = Field(min_length=2, index=True)
-    age: int | None = Field(default=None, ge=0, le=150, index=True)
+class TaskBase(SQLModel):
+    title: str = Field(min_length=2, max_length=50,index=True)
+    priority: int = Field(ge=1, index=True)
+    description: str | None = Field(default=None, max_length=300)
+    due_date: date | None = Field(default=None)
 
-class Hero(HeroBase, table=True):
+class Task(TaskBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    secret_name: str
+    completed: bool = Field(default=False)
