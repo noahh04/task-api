@@ -2,6 +2,14 @@
 
 Small REST API built with FastAPI as a backend learning project.
 
+## Overview
+
+- Managing Tasks (CRUD)
+- Automatic reordering of task priorities when creating, updating or deleting tasks
+- Input validation and HTTP status code handling
+- Automated API tests with pytest
+- Documentation with Swagger/OpenAPI
+
 ## Technologies 
 
 - Python
@@ -17,8 +25,7 @@ Small REST API built with FastAPI as a backend learning project.
 - Read Tasks
 - Update Tasks
 - Delete Tasks
-- Search for Tasks by specific properties
-- automatic update of tasks' priority when priority changed 
+- Search for Tasks by specific properties (title, priority)
 
 ## Run
 
