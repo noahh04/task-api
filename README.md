@@ -1,6 +1,6 @@
 # Task API 
 
-Small REST API built with FastAPI as a backend learning project.
+A REST API built with FastAPI for managing tasks with priorities. Tasks can be created, updated, deleted and searched by different properties.
 
 ## Overview
 
